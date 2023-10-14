@@ -1,0 +1,63 @@
+<div class="container">
+    <h2>City List</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Country</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let city of cities">
+          <td>{{ city.id }}</td>
+          <td>{{ city.name }}</td>
+          <td>{{ city.lat }}</td>
+          <td>{{ city.lon }}</td>
+          <td>
+            {{ getCountryName(city.countryId) }}
+          </td>
+          <td>
+            <button class="btn btn-info" (click)="editCity(city)">Edit</button>
+            <button class="btn btn-danger" (click)="deleteCity(city)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="container">
+    <label for="country">Country:</label>
+    <select class="form-control" id="country" [(ngModel)]="newCity.countryId" name="country" required>
+      <option value="0">Create New Country</option>
+      <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+    </select>
+  
+    <div *ngIf="newCity.countryId === 0" class="mt-3">
+      <label for="countryName">Country Name:</label>
+      <input class="form-control" type="text" id="countryName" [(ngModel)]="newCountry.name" name="countryName" required>
+  
+      <label for="iso2">Country ISO2:</label>
+      <input class="form-control" type="text" id="iso2" [(ngModel)]="newCountry.iso2" name="iso2" required>
+  
+      <label for="iso3">Country ISO3:</label>
+      <input class="form-control" type="text" id="iso3" [(ngModel)]="newCountry.iso3" name="iso3" required>
+    </div>
+    
+    <h2>Create New City</h2>
+    <form (submit)="saveCity()">
+      <label for="name">Name:</label>
+      <input class="form-control" type="text" id="name" [(ngModel)]="newCity.name" name="name" required>
+  
+      <label for="lat">Latitude:</label>
+      <input class="form-control" type="number" id="lat" [(ngModel)]="newCity.lat" name="lat" required>
+  
+      <label for="lon">Longitude:</label>
+      <input class="form-control" type="number" id="lon" [(ngModel)]="newCity.lon" name="lon" required>
+      
+      <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+  </div>
